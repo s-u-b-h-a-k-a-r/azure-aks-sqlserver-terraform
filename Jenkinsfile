@@ -2,13 +2,13 @@ pipeline {
   agent {
     kubernetes {
       //cloud 'kubernetes'
-      label 'jenkins-slave-erraform-kubectl-helm-azurecli'
+      label 'jenkins-slave-terraform-kubectl-helm-azurecli'
       yaml """
 apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: jenkins-slave-erraform-kubectl-helm-azurecli
+  - name: jenkins-slave-terraform-kubectl-helm-azurecli
     image: subhakarkotta/terraform-kubectl-helm-azurecli
     command: ['cat']
     tty: true
@@ -41,7 +41,7 @@ spec:
     environment {
        PLAN_NAME= "${cluster}-aks-terraform-plan"
        TFVARS_FILE_NAME= "${cluster}-aks-terraform.tfvars"
-       GIT_REPO = "https://github.com/SubhakarKotta/azure-aks-rds-terraform.git"
+       GIT_REPO = "https://github.com/SubhakarKotta/azure-aks-sqlserver-terraform.git"
     }   
     
     stages {
@@ -60,7 +60,7 @@ spec:
   	    }
         stage('Create terraform.tfvars') {
             steps {
-              container('jenkins-slave-erraform-kubectl-helm-azurecli'){ 
+              container('jenkins-slave-terraform-kubectl-helm-azurecli'){ 
                     wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                          dir ("provisioning") { 
                              echo "${parameters}"
@@ -74,7 +74,7 @@ spec:
          } 
         stage('versions') {
             steps {
-                container('jenkins-slave-erraform-kubectl-helm-azurecli'){ 
+                container('jenkins-slave-terraform-kubectl-helm-azurecli'){ 
                       wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                             sh 'terraform version'
                             sh 'kubectl version'
@@ -86,7 +86,7 @@ spec:
          }
         stage('init') {
             steps {
-               container('jenkins-slave-erraform-kubectl-helm-azurecli'){ 
+               container('jenkins-slave-terraform-kubectl-helm-azurecli'){ 
                     withCredentials([azureServicePrincipal(credentialsId: params.credential, subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID', clientIdVariable: 'ARM_CLIENT_ID', clientSecretVariable: 'ARM_CLIENT_SECRET', tenantIdVariable: 'ARM_TENANT_ID')]) {
                         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                             dir ("provisioning") { 
@@ -102,7 +102,7 @@ spec:
                 expression { params.action == 'preview' || params.action == 'create' }
              }
              steps {
-                container('jenkins-slave-erraform-kubectl-helm-azurecli'){ 
+                container('jenkins-slave-terraform-kubectl-helm-azurecli'){ 
                      withCredentials([azureServicePrincipal(credentialsId: params.credential, subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID', clientIdVariable: 'ARM_CLIENT_ID', clientSecretVariable: 'ARM_CLIENT_SECRET', tenantIdVariable: 'ARM_TENANT_ID')]) {
                          wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                              dir ("provisioning") { 
@@ -118,7 +118,7 @@ spec:
                 expression { params.action == 'preview' }
             }
             steps {
-               container('jenkins-slave-erraform-kubectl-helm-azurecli'){ 
+               container('jenkins-slave-terraform-kubectl-helm-azurecli'){ 
                     withCredentials([azureServicePrincipal(credentialsId: params.credential, subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID', clientIdVariable: 'ARM_CLIENT_ID', clientSecretVariable: 'ARM_CLIENT_SECRET', tenantIdVariable: 'ARM_TENANT_ID')]) {
                         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                             dir ("provisioning") {
@@ -134,7 +134,7 @@ spec:
                 expression { params.action == 'create' }
             }
             steps {
-                container('jenkins-slave-erraform-kubectl-helm-azurecli'){ 
+                container('jenkins-slave-terraform-kubectl-helm-azurecli'){ 
                      withCredentials([azureServicePrincipal(credentialsId: params.credential, subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID', clientIdVariable: 'ARM_CLIENT_ID', clientSecretVariable: 'ARM_CLIENT_SECRET', tenantIdVariable: 'ARM_TENANT_ID')]) {
                          wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                               dir ("provisioning") {
@@ -151,7 +151,7 @@ spec:
                 expression { params.action == 'show' }
             }
             steps {
-                container('jenkins-slave-erraform-kubectl-helm-azurecli'){ 
+                container('jenkins-slave-terraform-kubectl-helm-azurecli'){ 
                      withCredentials([azureServicePrincipal(credentialsId: params.credential, subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID', clientIdVariable: 'ARM_CLIENT_ID', clientSecretVariable: 'ARM_CLIENT_SECRET', tenantIdVariable: 'ARM_TENANT_ID')]) {
                          wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                              dir ("provisioning") {
@@ -167,7 +167,7 @@ spec:
                 expression { params.action == 'preview-destroy' }
             }
             steps {
-                  container('jenkins-slave-erraform-kubectl-helm-azurecli'){ 
+                  container('jenkins-slave-terraform-kubectl-helm-azurecli'){ 
                        withCredentials([azureServicePrincipal(credentialsId: params.credential, subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID', clientIdVariable: 'ARM_CLIENT_ID', clientSecretVariable: 'ARM_CLIENT_SECRET', tenantIdVariable: 'ARM_TENANT_ID')]) {
                            wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                                dir ("provisioning") {
@@ -183,7 +183,7 @@ spec:
                 expression { params.action == 'destroy' }
             }
             steps {
-                container('jenkins-slave-erraform-kubectl-helm-azurecli'){ 
+                container('jenkins-slave-terraform-kubectl-helm-azurecli'){ 
                      withCredentials([azureServicePrincipal(credentialsId: params.credential, subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID', clientIdVariable: 'ARM_CLIENT_ID', clientSecretVariable: 'ARM_CLIENT_SECRET', tenantIdVariable: 'ARM_TENANT_ID')]) {
                          wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                               dir ("provisioning") {
