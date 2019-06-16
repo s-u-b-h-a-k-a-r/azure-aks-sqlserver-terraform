@@ -1,0 +1,15 @@
+module "sql-database" {
+  source                 = "Azure/database/azurerm"
+  resource_group_name    = "${var.db_resource_group_name}"
+  server_version         = "${var.server_version}"
+  db_edition             = "${var.db_edition}"
+  service_objective_name = "${var.service_objective_name}"
+  collation              = "${var.collation}"
+  start_ip_address       = "${var.start_ip_address}"
+  end_ip_address         = "${var.end_ip_address}"
+  location               = "${var.location}"
+  db_name                = "${var.db_name}"
+  sql_admin_username     = "${var.sql_admin_username}"
+  sql_password           = "${var.sql_password}"
+  tags                   = "${var.tags}"
+}

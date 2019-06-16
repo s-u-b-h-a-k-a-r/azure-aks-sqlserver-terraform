@@ -1,0 +1,29 @@
+## terraform.tfvars
+##############################################################################################################################
+## AKS CLUSTER
+location                                                       = "eastus"
+admin_username                                                 = "demo"
+agents_size                                                    = "Standard_B4ms"
+agents_count                                                   = "4"
+log_analytics_workspace_sku                                    = "PerGB2018"
+log_retention_in_days                                          = "30"
+public_ssh_key                                                 =  ""
+kubernetes_version                                             = "1.13.5"
+
+##############################################################################################################################
+## SQLSERVER
+db_resource_group_name                                         = "subhakar-demo-cloud-db-rg"
+server_version                                                 = "12.0"
+db_edition                                                     = "Basic"
+service_objective_name                                         = "Basic"
+collation                                                      = "SQL_Latin1_General_CP1_CI_AS"
+start_ip_address                                               = "0.0.0.0"
+end_ip_address                                                 = "0.0.0.0"
+db_name                                                        = "subhakar-demo-cloud"  //Finally it will create subhakar-demo-cloud-sqlsvr
+sql_admin_username                                             = "demo"
+sql_password                                                   = "P@ssw0rd12345!"
+tags                                                           =    {
+                                                                       environment = "dev"
+                                                                       team  = "demo"
+                                                                    }
+##############################################################################################################################
