@@ -1,17 +1,7 @@
 provider "azurerm" {
  version = "=1.29.0"
 }
-provider "local" {
-  version = "~> 1.2"
-}
 
-provider "null" {
-  version = "~> 2.1"
-}
-
-provider "template" {
-  version = "~> 2.1"
-}
 
 variable "prefix" {
   description = "The prefix for the resources created in the specified Azure Resource Group"
