@@ -9,7 +9,7 @@ kind: Pod
 spec:
   containers:
   - name: jenkins-slave-terraform-kubectl-helm-azurecli
-    image: subhakarkotta/terraform-kubectl-helm-azurecli
+    image: subhakarkotta/terraform-kubectl-helm-azurecli:0.12.2-v1.14.3-v2.13.1-2.0
     command: ['cat']
     tty: true
 """
