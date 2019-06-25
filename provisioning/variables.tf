@@ -1,4 +1,6 @@
-provider "azurerm" {}
+provider "azurerm" {
+  version = "~> 1.27"
+}
 
 variable "prefix" {
   description = "The prefix for the resources created in the specified Azure Resource Group"
