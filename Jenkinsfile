@@ -90,6 +90,7 @@ spec:
                     withCredentials([azureServicePrincipal(credentialsId: params.credential, subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID', clientIdVariable: 'ARM_CLIENT_ID', clientSecretVariable: 'ARM_CLIENT_SECRET', tenantIdVariable: 'ARM_TENANT_ID')]) {
                         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                             dir ("provisioning") { 
+       			       sh 'terraform providers'
                                sh 'terraform init  -backend-config="resource_group_name=${resourcegroup}" -backend-config="storage_account_name=${storageaccount}" -backend-config="container_name=${container}" -backend-config="access_key=${accesskey}" -backend-config="key=${cluster}-aks.tfstate"'
                             }
                          }
